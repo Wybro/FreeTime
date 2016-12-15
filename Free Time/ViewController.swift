@@ -10,14 +10,14 @@ import UIKit
 import EventKit
 
 class ViewController: UIViewController {
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
         calendarAuth()
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -37,43 +37,56 @@ class ViewController: UIViewController {
                     
                 }else{
                     print("Access denied")
-                }  
+                }
             })
         default:
             print("Case Default")
         }
     }
-
-
+    
+    
     func getCalendars() {
-        var titles : [String] = []
-        var startDates : [NSDate] = []
-        var endDates : [NSDate] = []
+//        var titles : [String] = []
+//        var startDates : [NSDate] = []
+//        var endDates : [NSDate] = []
         
         let eventStore = EKEventStore()
         let calendars = eventStore.calendars(for: .event)
         
         for calendar in calendars {
-            print(calendar)
-//            if calendar.title == "Work" {
+//            print(calendar)
+            //            if calendar.title == "Work" {
+            //
+//            let oneMonthAgo = NSDate(timeIntervalSinceNow: -30*24*3600)
+//            let oneMonthAfter = NSDate(timeIntervalSinceNow: +30*24*3600)
+            
+            let today = Date()
+            let tomorrow = today.addingTimeInterval(24*60*60)
+            
+           
+            let predicate = eventStore.predicateForEvents(withStart: today.startOfDay, end: today.endOfDay!, calendars: [calendar])
+            
+            let tomorrowPredicate = eventStore.predicateForEvents(withStart: tomorrow.startOfDay, end: tomorrow.endOfDay!, calendars: [calendar])
+            
+            let events = eventStore.events(matching: predicate)
+            let tomorrowEvents = eventStore.events(matching: tomorrowPredicate)
+            
+            print("Events today")
+            for event in events {
+//                titles.append(event.title)
+//                startDates.append(event.startDate as NSDate)
+//                endDates.append(event.endDate as NSDate)
 //                
-                let oneMonthAgo = NSDate(timeIntervalSinceNow: -30*24*3600)
-                let oneMonthAfter = NSDate(timeIntervalSinceNow: +30*24*3600)
-//
-                let predicate = eventStore.predicateForEvents(withStart: oneMonthAgo as Date, end: oneMonthAfter as Date, calendars: [calendar])
-//
-                let events = eventStore.events(matching: predicate)
-//
-                for event in events {
-                    titles.append(event.title)
-                    startDates.append(event.startDate as NSDate)
-                    endDates.append(event.endDate as NSDate)
-                    
-                    print("Event: \(event.title) -- Start Date: \(event.startDate) -- End Date: \(event.endDate)")
-                }
-//            }
+                print("Event: \(event.title) -- Start Date: \(event.startDate) -- End Date: \(event.endDate)")
+            }
+            
+            print("Events tomorrow")
+            for event in tomorrowEvents {
+                print("Event: \(event.title) -- Start Date: \(event.startDate) -- End Date: \(event.endDate)")
+            }
+            
         }
-
+        
     }
     
 }

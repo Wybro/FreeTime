@@ -12,6 +12,7 @@
 		25D8ADCF1E0238B1000110E2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 25D8ADCD1E0238B1000110E2 /* Main.storyboard */; };
 		25D8ADD11E0238B1000110E2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 25D8ADD01E0238B1000110E2 /* Assets.xcassets */; };
 		25D8ADD41E0238B1000110E2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 25D8ADD21E0238B1000110E2 /* LaunchScreen.storyboard */; };
+		2DE5084B1E03156300DC8D35 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DE5084A1E03156300DC8D35 /* Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,7 @@
 		25D8ADD01E0238B1000110E2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		25D8ADD31E0238B1000110E2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		25D8ADD51E0238B1000110E2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2DE5084A1E03156300DC8D35 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +59,7 @@
 				25D8ADC91E0238B1000110E2 /* AppDelegate.swift */,
 				25D8ADCB1E0238B1000110E2 /* ViewController.swift */,
 				25D8ADCD1E0238B1000110E2 /* Main.storyboard */,
+				2DE5084A1E03156300DC8D35 /* Extensions.swift */,
 				25D8ADD01E0238B1000110E2 /* Assets.xcassets */,
 				25D8ADD21E0238B1000110E2 /* LaunchScreen.storyboard */,
 				25D8ADD51E0238B1000110E2 /* Info.plist */,
@@ -138,6 +141,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				25D8ADCC1E0238B1000110E2 /* ViewController.swift in Sources */,
+				2DE5084B1E03156300DC8D35 /* Extensions.swift in Sources */,
 				25D8ADCA1E0238B1000110E2 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
