@@ -15,12 +15,33 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        getCalendars()
+        calendarAuth()
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func calendarAuth() {
+        switch EKEventStore.authorizationStatus(for: .event) {
+        case .authorized:
+            getCalendars()
+        case .denied:
+            print("Access denied")
+        case .notDetermined:
+            let eventStore = EKEventStore()
+            eventStore.requestAccess(to: .event, completion: { (granted: Bool, NSError) -> Void in
+                if granted {
+                    self.getCalendars()
+                    
+                }else{
+                    print("Access denied")
+                }  
+            })
+        default:
+            print("Case Default")
+        }
     }
 
 
