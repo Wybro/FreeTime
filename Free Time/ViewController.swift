@@ -9,6 +9,11 @@
 import UIKit
 import EventKit
 
+struct FreeTime {
+    var startDate: Date
+    var endDate: Date
+}
+
 class ViewController: UIViewController {
     
     override func viewDidLoad() {
@@ -44,7 +49,6 @@ class ViewController: UIViewController {
         }
     }
     
-    
     func getCalendars() {
 //        var titles : [String] = []
 //        var startDates : [NSDate] = []
@@ -70,23 +74,60 @@ class ViewController: UIViewController {
             
             let events = eventStore.events(matching: predicate)
             let tomorrowEvents = eventStore.events(matching: tomorrowPredicate)
+            var eventsToCheck = [EKEvent]()
             
-            print("Events today")
+//            print("Events today")
             for event in events {
 //                titles.append(event.title)
 //                startDates.append(event.startDate as NSDate)
 //                endDates.append(event.endDate as NSDate)
-//                
-                print("Event: \(event.title) -- Start Date: \(event.startDate) -- End Date: \(event.endDate)")
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateStyle = .short
+                dateFormatter.timeStyle = .short
+                if !event.isAllDay {
+                    print("Event: \(event.title) -- Start Date: \(dateFormatter.string(from: event.startDate)) -- End Date: \(dateFormatter.string(from: event.endDate))")
+                }
             }
             
-            print("Events tomorrow")
+//            print("Events tomorrow")
             for event in tomorrowEvents {
-                print("Event: \(event.title) -- Start Date: \(event.startDate) -- End Date: \(event.endDate)")
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateStyle = .short
+                dateFormatter.timeStyle = .short
+                if !event.isAllDay {
+                    print("Event: \(event.title) -- Start Date: \(dateFormatter.string(from: event.startDate)) -- End Date: \(dateFormatter.string(from: event.endDate))")
+                    eventsToCheck.append(event)
+                }
+            }
+            
+//            findFreeTime(events: events)
+            if !eventsToCheck.isEmpty {
+                findFreeTime(events: eventsToCheck)
             }
             
         }
         
+    }
+    
+    func findFreeTime(events: [EKEvent]) {
+        let startOfDay = events.first?.startDate.startOfDay
+        let endOfDay = startOfDay?.endOfDay
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .short
+        dateFormatter.timeStyle = .short
+        
+        print("REFERENCE EVENT: \(events.first?.title)")
+        print("START OF DAY: \(dateFormatter.string(from: startOfDay!))")
+        print("END OF DAY: \(dateFormatter.string(from: endOfDay!))")
+        
+        // Iterate through events & calculate regions of time between
+        for event in events {
+            if !event.isAllDay {
+                let interval = event.startDate.timeIntervalSince(startOfDay!)
+                print("Event: \(event.title) -- Interval: \(interval) seconds -- \(interval / 3600) hours")
+            }
+        }
     }
     
 }
