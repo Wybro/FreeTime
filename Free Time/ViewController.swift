@@ -113,6 +113,8 @@ class ViewController: UIViewController {
         let startOfDay = events.first?.startDate.startOfDay
         let endOfDay = startOfDay?.endOfDay
         
+        print(events.count)
+        
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = .short
         dateFormatter.timeStyle = .short
@@ -120,12 +122,23 @@ class ViewController: UIViewController {
         print("REFERENCE EVENT: \(events.first?.title)")
         print("START OF DAY: \(dateFormatter.string(from: startOfDay!))")
         print("END OF DAY: \(dateFormatter.string(from: endOfDay!))")
-        
+        //print("End of Last Event: \(dateFormatter.string(from: endOfLastEvent))")
         // Iterate through events & calculate regions of time between
-        for event in events {
+        var endOfLastEvent = startOfDay
+        for (index,event) in events.enumerated() {
             if !event.isAllDay {
-                let interval = event.startDate.timeIntervalSince(startOfDay!)
-                print("Event: \(event.title) -- Interval: \(interval) seconds -- \(interval / 3600) hours")
+                let interval = event.startDate.timeIntervalSince(endOfLastEvent!)
+                print("Event: \(event.title) -- Interval: \(interval) seconds -- \(interval / 3600) hours -- End of Last Event: \(dateFormatter.string(from: endOfLastEvent!))")
+                // need to use index to check the start time of the next event
+                
+                
+                print("End of Last Event: \(dateFormatter.string(from: endOfLastEvent!))")
+                if index + 1 < events.count {
+                    let nextEvent = ("Start time of Next Event \(dateFormatter.string(from: events[index+1].startDate))")
+                    print("You have \(interval / 3600) hours of Free Time from \(dateFormatter.string(from: endOfLastEvent!)) to \(dateFormatter.string(from: events[index+1].startDate)) ")
+
+                }
+                endOfLastEvent = event.endDate
             }
         }
     }
